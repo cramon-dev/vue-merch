@@ -4,7 +4,7 @@ let app = new Vue({
     product: 'Socks',
     image: 'img/vmSocks-green.jpg',
     description: 'A pair of socks. Nothing fancy',
-    inventory: 100,
+    inventory: 15,
     details: ["80% cotton", "20% polyester", "Gender neutral"],
     cart: 0,
     variants: [
@@ -22,6 +22,11 @@ let app = new Vue({
     sizes: [
       "S", "M", "L"
     ]
+  },
+  computed: {
+    inStock() {
+      return this.inventory > 0;
+    }
   },
   methods: {
     addToCart() {
