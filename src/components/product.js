@@ -1,3 +1,5 @@
+let eventBus = new Vue();
+
 Vue.component('product', {
   props: {
     premium: {
@@ -42,9 +44,6 @@ Vue.component('product', {
     },
     updateProduct(index) {
       this.selectedVariant = index;
-    },
-    addReview(productReview) {
-      this.reviews.push(productReview);
     }
   },
   computed: {
@@ -70,6 +69,11 @@ Vue.component('product', {
       return `${this.brand} ${this.product} is currently on sale; hurry and get yours before it's too late!`
     }
   },
+  mounted() {
+    eventBus.$on('add-review', productReview => {
+      this.reviews.push(productReview);
+    });
+  },
   template: `
     <div class="product">
       <div class="product-image">
@@ -83,7 +87,6 @@ Vue.component('product', {
         <p v-if="variantInventory > 10">In stock</p>
         <p v-else-if="variantInventory <= 10 && variantInventory > 0">Almost sold out</p>
         <p v-else :class="{ 'text-strikethrough': !inStock }">Out of stock</p>
-        <p>Shipping: {{ shippingCharge }}</p>
 
         <product-details :details="details"></product-details>
 
@@ -111,20 +114,10 @@ Vue.component('product', {
           Remove from Cart
         </button>
 
-        <div>
-          <h2>Reviews</h2>
-          <p v-if="!reviews.length">There are no reviews yet.</p>
-          <ul>
-            <li v-for="review in reviews">
-              <p>{{ review.name }} - {{ review.rating }}</p>
-              <p>{{ review.review }}</p>
-              <p v-if="review.recommend">{{ review.name }} recommends this product!</p>
-              <p v-else>{{ review.name }} would not recommend this product.</p>
-            </li>
-          </ul>
-        </div>
-
-        <product-review @add-review="addReview"></product-review>
+        <product-tabs :reviews="reviews"
+                      :shippingCharge="shippingCharge"
+                      :details="details">
+        </product-tabs>
       </div>
     </div>
   `

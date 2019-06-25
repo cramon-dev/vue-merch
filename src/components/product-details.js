@@ -6,11 +6,6 @@ Vue.component('product-details', {
     }
   },
   template: `
-    <div>
-      <h3>Details:</h3>
-      <ul>
-        <li v-for="detail in details">{{ detail }}</li>
-      </ul>
-    </div>
+    
   `
 });

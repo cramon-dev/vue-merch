@@ -20,7 +20,7 @@ Vue.component('product-review', {
           recommend: this.recommend
         };
   
-        this.$emit('add-review', productReview);
+        eventBus.$emit('add-review', productReview);
   
         this.name = '';
         this.review = '';
