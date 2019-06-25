@@ -38,6 +38,11 @@ button:disabled {
   text-decoration: line-through;
 }
 
+.sale-alert {
+  background-color: #FFAA00;
+  color: #000000;
+}
+
 .product-image {
   width: 80%;
 }
