@@ -12,7 +12,6 @@ Vue.component('product', {
       description: 'A pair of socks. Nothing fancy',
       details: ["80% cotton", "20% polyester", "Gender neutral"],
       onSale: true,
-      cart: 0,
       selectedVariant: 0,
       variants: [
         {
@@ -35,12 +34,10 @@ Vue.component('product', {
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
     },
     removeFromCart() {
-      if(this.cart > 0) {
-        this.cart -= 1;
-      }
+      this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId);
     },
     updateProduct(index) {
       this.selectedVariant = index;
@@ -109,10 +106,6 @@ Vue.component('product', {
                 v-on:click="removeFromCart">
           Remove from Cart
         </button>
-
-        <div class="cart">
-          <p>Cart ({{ cart }})</p>
-        </div>
       </div>
     </div>
   `
