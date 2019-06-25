@@ -29,7 +29,8 @@ Vue.component('product', {
       ],
       sizes: [
         "S", "M", "L"
-      ]
+      ],
+      reviews: []
     }
   },
   methods: {
@@ -41,6 +42,9 @@ Vue.component('product', {
     },
     updateProduct(index) {
       this.selectedVariant = index;
+    },
+    addReview(productReview) {
+      this.reviews.push(productReview);
     }
   },
   computed: {
@@ -106,6 +110,21 @@ Vue.component('product', {
                 v-on:click="removeFromCart">
           Remove from Cart
         </button>
+
+        <div>
+          <h2>Reviews</h2>
+          <p v-if="!reviews.length">There are no reviews yet.</p>
+          <ul>
+            <li v-for="review in reviews">
+              <p>{{ review.name }} - {{ review.rating }}</p>
+              <p>{{ review.review }}</p>
+              <p v-if="review.recommend">{{ review.name }} recommends this product!</p>
+              <p v-else>{{ review.name }} would not recommend this product.</p>
+            </li>
+          </ul>
+        </div>
+
+        <product-review @add-review="addReview"></product-review>
       </div>
     </div>
   `
